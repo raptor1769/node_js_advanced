@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const errorController = require("./controllers/error")
+const errorController = require("./controllers/error");
 // const expHandleBars = require("express-handlebars"); //this is only handlebar specific
 
 const app = express();
