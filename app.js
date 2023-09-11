@@ -4,9 +4,9 @@ const bodyParser = require("body-parser");
 
 const errorController = require("./controllers/error");
 
-const { mongoConnect } = require("./utils/database");
+const mongoose = require("mongoose");
 
-const User = require("./models/user")
+const User = require("./models/user");
 
 const app = express();
 
@@ -20,9 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  User.findById("64f85d72edb34869c3d9b441")
+  User.findById("64fee5e50debeb15e9469874")
     .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
+      req.user = user;
       next();
     })
     .catch((err) => console.log(err));
@@ -33,6 +33,12 @@ app.use(shopRoutes);
 
 app.use(errorController.getError);
 
-mongoConnect(() => {
-  app.listen(3000);
-});
+mongoose
+  .connect(
+    "mongodb+srv://raptor:Raptor1769@mernnetflix.21nfmlg.mongodb.net/bookStore?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    app.listen(3000);
+    console.log("DB Connected");
+  })
+  .catch((err) => console.error(err));
