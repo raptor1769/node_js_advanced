@@ -1,5 +1,9 @@
 exports.getError = (req, res, next) => {
   res
     .status(404)
-    .render("error", { docTitle: "404 - Page not found", path: "" });
+    .render("error", {
+      docTitle: "404 - Page not found",
+      path: "",
+      isLoggedIn: req.session.isLoggedIn,
+    });
 };
